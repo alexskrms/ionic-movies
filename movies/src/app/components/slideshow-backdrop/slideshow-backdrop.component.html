@@ -1,0 +1,7 @@
+<ion-slides [options]="slideOpts">
+  <ion-slide *ngFor="let movie of recentMovies">
+    <ion-card (click)="showDetail( movie.id )">
+      <img [src]="movie.backdrop_path | image: '/w500'">
+    </ion-card>
+  </ion-slide>
+</ion-slides>
