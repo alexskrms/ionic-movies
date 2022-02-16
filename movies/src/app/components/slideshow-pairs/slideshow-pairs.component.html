@@ -2,7 +2,7 @@
   <ion-slide *ngFor="let pairs of popularMovies | pairs">
     <ion-row>
       <ion-col size="12" *ngFor="let movie of pairs">
-        <ion-card (click)="showDetail( movie.id )">
+        <ion-card mode="md" (click)="showDetail( movie.id )">
           <img [src]="movie.poster_path | image: '/w500'" class="poster">
         </ion-card>
       </ion-col>
