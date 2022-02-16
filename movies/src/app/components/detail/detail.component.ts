@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MoviesService } from '../../services/movies.service';
 import { MovieDetail, Cast } from '../../interfaces/interfaces';
 import { ModalController } from '@ionic/angular';
+import { LocalDataService } from '../../services/local-data.service';
 
 @Component({
   selector: 'app-detail',
@@ -15,6 +16,7 @@ export class DetailComponent implements OnInit {
   movie: MovieDetail = {};
   actors: Cast[] = [];
   hidden: number = 150;
+  star = 'star-outline';
 
   slideOptActors = {
     slidesPerView: 3.3,
@@ -22,9 +24,11 @@ export class DetailComponent implements OnInit {
     spaceBetween: 0
   };
 
-  constructor( private moviesService: MoviesService, private modalCtrl: ModalController ) { }
+  constructor( private moviesService: MoviesService, private modalCtrl: ModalController, private localData: LocalDataService ) { }
 
   ngOnInit() {
+    this.localData.existMovie( this.id ).then( exists => this.star = (exists) ? 'star': 'star-outline');
+
     this.moviesService.getMovieDetail(this.id).subscribe( response => {
       this.movie = response;
     });
@@ -39,6 +43,6 @@ export class DetailComponent implements OnInit {
   }
 
   favorite(){
-
+    this.localData.saveMovie(this.movie).then( exists => this.star = (exists) ? 'star': 'star-outline');
   }
 }
