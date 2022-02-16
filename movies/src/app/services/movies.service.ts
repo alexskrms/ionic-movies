@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ResponseMovieDB, MovieDetail, ResponseCredits } from '../interfaces/interfaces';
+import { ResponseMovieDB, MovieDetail, ResponseCredits, Genres } from '../interfaces/interfaces';
 import { environment } from '../../environments/environment';
 
 const URL = environment.url;
@@ -12,6 +12,7 @@ const bearerToken = environment.bearerToken;
 export class MoviesService {
 
   private popularsPage = 0;
+  genres: Genres[] = [];
 
   constructor( private http: HttpClient ) { }
 
@@ -59,5 +60,9 @@ export class MoviesService {
 
   searchMovies( text: string) {
     return this.executeQuery(`/search/movie?query=${text}`);
+  }
+
+  loadGenres() {
+    return this.executeQuery<Genres>(`/genre/movie/list`);
   }
 }
